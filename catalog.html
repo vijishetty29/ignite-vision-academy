@@ -33,14 +33,21 @@
         <div class="container">
             <a href="index.html" class="logo-container"> <img src="images/logo.png" alt="Ignite Vision Academy Logo"> <h1>IGNITE VISION ACADEMY</h1>
             </a>
-            <nav>
+            <nav id="primary-navigation" data-visible="false">
                 <ul>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="index.html#initiatives">Initiatives</a></li>
                     <li><a href="index.html#publications">Publications</a></li>
-                    <li><a href="catalog.html" class="active">Catalog</a></li> <li><a href="index.html#events">Events</a></li>
+                    <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="index.html#events">Events</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
                 </ul>
+                
+                <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                    <span class="sr-only" style="display: none;">Menu</span>
+                    <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path></svg>
+                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"></path></svg>
+                </button>
             </nav>
         </div>
     </header>
@@ -225,5 +232,26 @@ EXAMPLE
         </a>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        const primaryNav = document.getElementById('primary-navigation');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+
+        navToggle.addEventListener('click', () => {
+            const isVisible = primaryNav.getAttribute('data-visible') === 'true';
+            
+            if (isVisible) {
+                primaryNav.setAttribute('data-visible', 'false');
+                navToggle.setAttribute('aria-expanded', 'false');
+            } else {
+                primaryNav.setAttribute('data-visible', 'true');
+                navToggle.setAttribute('aria-expanded', 'true');
+            }
+        });
+    </script>
+    
+    </body>
+</html>
 </body>
 </html>
