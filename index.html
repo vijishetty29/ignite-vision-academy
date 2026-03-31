@@ -1,5 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- FLYER CAROUSEL INITIALIZATION ---
+    const flyerSwiper = new Swiper('#flyer-swiper', {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        autoplay: {
+            delay: 3500,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30
+            }
+        },
+        pagination: {
+            el: '#flyer-swiper .swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.flyer-next', // Targets the unique class
+            prevEl: '.flyer-prev', // Targets the unique class
+        },
+    });
+
+    // --- PUBLICATIONS CAROUSEL INITIALIZATION ---
+    // Make sure this also uses unique classes (e.g., .pub-next / .pub-prev)
+    const publicationsSwiper = new Swiper('#publications-swiper', {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        breakpoints: {
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 }
+        },
+        navigation: {
+            nextEl: '.pub-next', 
+            prevEl: '.pub-prev',
+        },
+    });
+});
+    document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. FLY-IN / REVEAL ON SCROLL ---
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // stop observing once it has flown in
+                revealObserver.unobserve(entry.target); 
+            }
+        });
+    }, { 
+        threshold: 0.15, // Trigger when 15% of element is visible
+        rootMargin: "0px 0px -20px 0px" 
+    });
+
+    // Targets every element with the 'reveal' class
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // --- 2. POPUP MODAL ---
+    const modalOverlay = document.getElementById('announcementModal');
+    if (modalOverlay) {
+        setTimeout(() => { modalOverlay.style.display = 'flex'; }, 1500);
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
+        });
+    }
+
+
+    // --- 3. SWIPER INITIALIZATIONS ---
+    new Swiper('#hero-swiper', {
+        loop: true,
+        effect: 'fade',
+        autoplay: { delay: 5000 },
+        pagination: { el: '.hero-pagination', clickable: true },
+        navigation: { nextEl: '.hero-nav-next', prevEl: '.hero-nav-prev' }
+    });
+
+    new Swiper('#publications-swiper', {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+    });
+
+    new Swiper('#flyer-swiper', {
+        loop: true,
+        slidesPerView: 1,
+        breakpoints: { 768: { slidesPerView: 2, spaceBetween: 30 } },
+        pagination: { el: '.swiper-pagination', clickable: true }
+    });
+
+    // --- 4. MOBILE NAV ---
+    const navToggle = document.querySelector('.mobile-nav-toggle');
+    const primaryNav = document.getElementById('primary-navigation');
+    if (navToggle) {
+        navToggle.addEventListener('click', () => {
+            const isVisible = primaryNav.getAttribute('data-visible') === 'true';
+            primaryNav.setAttribute('data-visible', !isVisible);
+            navToggle.setAttribute('aria-expanded', !isVisible);
+        });
+    }
+});
+   </script>
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +122,68 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- SLIDE-IN ANIMATION STYLES --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1);
+            visibility: hidden;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        /* Awards specific styling */
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .award-item {
+            background: #fff;
+            padding: 12px 20px;
+            border-left: 4px solid var(--primary-gold);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .award-item::before {
+            content: "🏆";
+            margin-right: 10px;
+        }
+
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .benefit-card {
+            background: var(--primary-blue);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card h4 {
+            color: var(--primary-gold);
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 
@@ -35,7 +207,7 @@
         <div class="modal-content">
             <button class="modal-close" id="closeModalBtn">&times;</button>
             <h3>Upcoming Event!</h3>
-            <img src="images/upcoming-event-smartpls.png" alt="Upcoming Workshop on SmartPLS"> </div>
+            <img src="images/upcoming-event.png" alt="Upcoming Workshop on SmartPLS"> </div>
     </div>
 
     <header>
@@ -46,8 +218,9 @@
             <nav id="primary-navigation" data-visible="false">
                 <ul>
                     <li><a href="index.html#about">About</a></li>
-                    <li><a href="index.html#initiatives">Initiatives</a></li>
+                    <li><a href="index.html#initiatives">Services</a></li>
                     <li><a href="index.html#publications">Publications</a></li>
+                    <li><a href="index.html#awards">Awards</a></li>
                     <li><a href="catalog.html">Catalog</a></li>
                     <li><a href="index.html#events">Events</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
@@ -114,11 +287,11 @@
 
         <section id="about">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal">
                     <h2>About Us</h2>
                 </div>
                 <div class="about-content">
-                    <div class="about-card">
+                    <div class="about-card reveal">
                         <svg class="about-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639l4.43-4.43a.625.625 0 01.9.9L3.48 11.41a.625.625 0 01-.9 0L2.036 12.322zM12.38 2.036a1.012 1.012 0 01.639 0l4.43 4.43a.625.625 0 01-.9.9L15.19 3.48a.625.625 0 010-.9l-2.81-2.81zM12.38 21.964a1.012 1.012 0 01-.639 0l-4.43-4.43a.625.625 0 01.9-.9l2.81 2.81a.625.625 0 010 .9l-2.81 2.81zM21.964 12.38a1.012 1.012 0 010 .639l-4.43 4.43a.625.625 0 01-.9-.9l2.81-2.81a.625.625 0 01.9 0l2.81 2.81zM12 15a3 3 0 100-6 3 3 0 000 6z" />
                           <path stroke-linecap="round" stroke-linejoin="round" d="M15.364 15.364A5 5 0 1110.5 10.5h.001a5 5 0 014.863 4.863z" />
@@ -126,229 +299,458 @@
                         <h3>Our Vision</h3>
                         <p>Connect to readers worldwide with powerful stories and transformative ideas. We strive to publish books that spark vital conversations, foster deep empathy, and build a global community.</p>
                     </div>
-                    <div class="about-card">
+                    <div class="about-card reveal">
                         <svg class="about-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                         </svg>
                         <h3>Our Mission</h3>
                         <p>Discover and publish exceptional writers and diverse perspectives. We are committed to editorial excellence, innovative marketing, and global distribution, placing powerful stories into the hands of readers everywhere.</p>
                     </div>
-                    <div class="about-card">
+                    <div class="about-card reveal">
                         <svg class="about-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m-12.06 3.197a5.971 5.971 0 01.941-3.197m0 0A5.995 5.995 0 0112 12.75a5.995 5.995 0 015.058 2.772m-10.116 0A5.995 5.995 0 0112 12.75a5.995 5.995 0 015.058 2.772" />
                         </svg>
                         <h3>Who We Are</h3>
-                        <p>Ignite Vision Academy is a leading academic institution dedicated to advancing scholarly communication and enhancing professional competencies for educators and students.</p>
+                        <p>Ignite Vision Academy MSME Reg. No. TN/21/0005125 is a leading academic institution dedicated to advancing scholarly communication and enhancing professional competencies for educators and students.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="team">
-            <div class="container">
-                
-                <h3 class="team-category">Administration</h3>
-                <div class="team-group-wrapper">
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-                        </div>
-                        <h3>Shri. T Ramaraj</h3>
-                        <p class="title">Director</p>
-                    </div>
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-                        </div>
-                        <h3>Shri V. Ganesh</h3>
-                        <p class="title">Deputy Director</p>
-                    </div>
-                </div>
+       <section id="team">
+    <div class="container">
+        
+        <div class="section-header reveal">
+            <h2>Our Leadership</h2>
+        </div>
 
-                <h3 class="team-category">Advisory Board</h3>
-                <div class="team-group-wrapper">
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-                        </div>
-                        <h3>Dr. Shetty Deepa</h3>
-                        <p class="title">Vice Chairperson</p>
-                        <p>Assistant Professor, Sathyabama Institute, Chennai</p>
-                    </div>
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-                        </div>
-                        <h3>Dr.M.Soundarya</h3>
-                        <p class="title">Vice Chairperson</p>
-                        <p>Assistant Professor, Sathyabama Institute, Chennai</p>
-                    </div>
-                    <div class="team-card">
-                        <div class="team-avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-                        </div>
-                        <h3>Viji Shetty</h3>
-                        <p class="title">Joint Secretary</p>
-                        <p>Lead Engineer, Schwarz IT, Germany</p>
-                    </div>
-                </div>
-
+        <h3 class="team-category reveal">Administration</h3>
+        <div class="team-group-wrapper reveal" style="margin-bottom: 60px;">
+            <div class="team-card">
+                <h3>Shri. Thangapandian Ramaraj</h3>
+                <p class="title">Director</p>
             </div>
-        </section>
+            <div class="team-card">
+                <h3>Shri. Valliyappan G</h3>
+                <p class="title">Deputy Director</p>
+            </div>
+        </div>
+
+        <h3 class="team-category reveal">Advisory Board</h3>
+        <div class="team-group-wrapper reveal">
+            
+            <div class="team-card">
+                <h3>Er. Viji Manikandaraja</h3>
+                <p class="title">Vice Chairman</p>
+                <div class="team-details">
+                    <p>Lead Engineer, Schwarz Digits, Germany.</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <h3>Dr. K. Maran</h3>
+                <p class="title">Joint Secretary</p>
+                <div class="team-details">
+                    <p>Professor & Director, Co-ordinator ED Cell,</p>
+                    <p>Sri Sai Ram Institute of Management Studies</p>
+                    <p>Sri Sai Ram Engineering College, Chennai, Tamil Nadu.</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <h3>Dr. P. Priyadarsini</h3>
+                <p class="title">Member</p>
+                <div class="team-details">
+                    <p>Professor & Head</p>
+                    <p>Department of Management Studies,</p>
+                    <p>Tagore Engineering College.</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <h3>Dr. T. Lokeswara Rao</h3>
+                <p class="title">Member</p>
+                <div class="team-details">
+                    <p>Associate Professor, School of Management Studies</p>
+                    <p>GIET University Gunupur, Odisha.</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <h3>Dr. T. Anitha Kumari</h3>
+                <p class="title">Member</p>
+                <div class="team-details">
+                    <p>Assistant Professor, Department of Economics</p>
+                    <p>University College of Arts & Commerce</p>
+                    <p>Adikavi Nannaya University, Andhra Pradesh</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
         <section id="initiatives">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Our Academic Initiatives</h2>
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Our Academic Services</h2>
+        </div>
+        <div class="initiatives-grid">
+            
+            <div class="initiative-card reveal" style="transition-delay: 0.1s;">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80" alt="Faculty Development">
                 </div>
-                <div class="initiatives-grid">
-                    <div class="initiative-card">
-                        <h3>Faculty Development Programmes</h3>
-                        <p>Designed to enrich teaching practices and strengthen professional competencies. We emphasize classroom engagement, quality research, and leadership skills.</p>
-                    </div>
-                    <div class="initiative-card">
-                        <h3>Workshops</h3>
-                        <p>Interactive, hands-on training sessions with practical skills. We connect theoretical concepts with real-world applications for an experiential understanding.</p>
-                    </div>
-                    <div class="initiative-card">
-                        <h3>Seminars</h3>
-                        <p>Insightful seminars by distinguished industry experts and scholars. A platform for academic dialogue, networking, and staying informed on emerging trends.</p>
-                    </div>
-                    <div class="initiative-card">
-                        <h3>Conferences/Symposiums</h3>
-                        <p>Spotlighting innovative research and scholarly advancements. Uniting leading experts, researchers, and innovators to share insights and promote interdisciplinary collaboration.</p>
-                    </div>
-                    <div class="initiative-card">
-                        <h3>Students Certificate Programme</h3>
-                        <p>Dedicated to nurturing the academic, personal, and professional growth of learners. Aiming to strengthen critical thinking, communication, and problem-solving abilities.</p>
-                    </div>
-                    <div class="initiative-card">
-                        <h3>Publications</h3>
-                        <p>Providing profound insights into emerging academic trends and research methodologies. We promote intellectual growth and inspire critical inquiry.</p>
-                    </div>
-                </div>
+                <h3>Faculty Development Programmes</h3>
+                <p>Designed to enrich teaching practices and strengthen professional competencies. We emphasize classroom engagement, quality research, and leadership skills.</p>
             </div>
-        </section>
+
+            <div class="initiative-card reveal" style="transition-delay: 0.2s;">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80" alt="Workshops">
+                </div>
+                <h3>Workshops</h3>
+                <p>Interactive, hands-on training sessions with practical skills. We connect theoretical concepts with real-world applications for an experiential understanding.</p>
+            </div>
+
+            <div class="initiative-card reveal" style="transition-delay: 0.3s;">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80" alt="Seminars">
+                </div>
+                <h3>Seminars</h3>
+                <p>Insightful seminars by distinguished industry experts and scholars. A platform for academic dialogue, networking, and staying informed on emerging trends.</p>
+            </div>
+
+            <div class="initiative-card reveal" style="transition-delay: 0.1s;">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" alt="Conferences">
+                </div>
+                <h3>Conferences/Symposiums</h3>
+                <p>Spotlighting innovative research and scholarly advancements. Uniting leading experts, researchers, and innovators to share insights and promote interdisciplinary collaboration.</p>
+            </div>
+
+            <div class="initiative-card reveal" style="transition-delay: 0.2s;">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="Student Certification">
+                </div>
+                <h3>Students Certificate Programme</h3>
+                <p>Dedicated to nurturing the academic, personal, and professional growth of learners. Aiming to strengthen critical thinking, communication, and problem-solving abilities.</p>
+            </div>
+
+            <div class="initiative-card reveal" style="transition-delay: 0.3s;">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80" alt="Publications">
+                </div>
+                <h3>Publications</h3>
+                <p>Providing profound insights into emerging academic trends and research methodologies. We promote intellectual growth and inspire critical inquiry.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
 
         <section id="publications">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal">
                     <h2>Ignite Vision Publication</h2>
                 </div>
                 
-                <div class="publication-intro">
+                <div class="publication-intro reveal">
                     <p>Ignite Vision Publisher strives to foster academic innovation by delivering exceptional publishing services. We specialize in academic books, conference volumes, textbooks, and Ph.D. theses, all issued with a valid ISBN.</p>
                 </div>
 
                 <div class="publication-process">
-                    <div class="process-card">
+                    <div class="process-card reveal">
                         <h3>Book Chapter Publication</h3>
                         <p>Offers authors an opportunity to showcase their research within expertly curated volumes. Each chapter undergoes a rigorous peer evaluation process to maintain the highest standards.</p>
                     </div>
-                    <div class="process-card">
+                    <div class="process-card reveal">
                         <h3>Book Publishing Process</h3>
                         <p>A structured process to support authors from submission to publication. The process includes initial submission, in-depth review, peer evaluation, author refinement, and expert editing.</p>
                     </div>
                 </div>
 
-                <h3 style="text-align: center; font-size: 2.2rem; margin-bottom: 40px;">List of Books Published</h3>
+                <h3 class="reveal" style="text-align: center; font-size: 2.2rem; margin-bottom: 40px;">List of Books Published</h3>
                 
-                <div class="publication-carousel-container">
+                <div class="publication-carousel-container reveal">
                     <div class="swiper" id="publications-swiper">
                         <div class="swiper-wrapper">
-                            
-                            <div class="swiper-slide book-slide">
-                                <div class="book-image-container">
-                                    <img src="images/book-supply-chain-front.png" alt="Book Cover: Supply Chain Finance" class="book-image book-cover-front">
-                                    <img src="images/book-supply-chain-back.png" alt="Book Cover: Supply Chain Finance" class="book-image book-cover-back">
-                                </div>
-                                <div class="book-slide-content">
-                                    <h3>Supply Chain Finance</h3>
-                                    <p class="book-price">₹499</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
-                                </div>
-                            </div>
-                            
-                            <div class="swiper-slide book-slide">
-                                <div class="book-image-container">
-                                    <img src="images/book-managerial-economics-front.png" alt="Book Cover: Managerial Economics" class="book-image book-cover-front">
-                                    <img src="images/book-managerial-economics-back.png" alt="Book Cover: Managerial Economics" class="book-image book-cover-back">
-                                </div>
-                                <div class="book-slide-content">
-                                    <h3>Managerial Economics</h3>
-                                    <p class="book-price">₹549</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
-                                </div>
-                            </div>
-                            
-                            <div class="swiper-slide book-slide">
-                                <div class="book-image-container">
-                                    <img src="images/book-retail-management-front.png" alt="Book Cover: Retail Management" class="book-image book-cover-front">
-                                    <img src="images/book-retail-management-back.png" alt="Book Cover: Retail Management" class="book-image book-cover-back">
-                                </div>
-                                <div class="book-slide-content">
-                                    <h3>Retail Management</h3>
-                                    <p class="book-price">₹449</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
-                                </div>
-                            </div>
-                            
-                            <div class="swiper-slide book-slide">
-                                <div class="book-image-container">
-                                    <img src="images/book-business-taxation-front.png" alt="Book Cover: Business Taxation" class="book-image book-cover-front">
-                                    <img src="images/book-business-taxation-back.png" alt="Book Cover: Business Taxation" class="book-image book-cover-back">
-                                </div>
-                                <div class="book-slide-content">
-                                    <h3>Business Taxation</h3>
-                                    <p class="book-price">₹599</p> <a href="https.www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
-                                </div>
-                            </div>
-                            
-                            <div class="swiper-slide book-slide">
-                                <div class="book-image-container">
-                                    <img src="images/book-financial-accounting-front.png" alt="Book Cover: Financial Accounting" class="book-image book-cover-front">
-                                    <img src="images/book-financial-accounting-back.png" alt="Book Cover: Financial Accounting" class="book-image book-cover-back">
-                                </div>
-                                <div class="book-slide-content">
-                                    <h3>Financial Accounting</h3>
-                                    <p class="book-price">₹650</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
-                                </div>
-                            </div>
-                            
-                            <div class="swiper-slide book-slide">
-                                <div class="book-image-container">
-                                    <img src="images/book-retail-banking-front.png" alt="Book Cover: Retail Banking" class="book-image book-cover-front">
-                                    <img src="images/book-retail-banking-back.png" alt="Book Cover: Retail Banking" class="book-image book-cover-back">
-                                </div>
-                                <div class="book-slide-content">
-                                    <h3>Retail Banking</h3>
-                                    <p class="book-price">₹520</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
-                                </div>
-                            </div>
-                            
-                            <div class="swiper-slide book-slide">
-                                <div class="book-image-container">
-                                    <img src="images/book-retail-brand-management-front.png" alt="Book Cover: Retail and Brand Management" class="book-image book-cover-front">
-                                    <img src="images/book-retail-brand-management-back.png" alt="Book Cover: Retail and Brand Management" class="book-image book-cover-back">
-                                </div>
-                                <div class="book-slide-content">
-                                    <h3>Retail & Brand Management</h3>
-                                    <p class="book-price">₹600</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
-                                </div>
-                            </div>
-                        </div>
+    
+    <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/book-supply-chain-front.png" alt="Book Cover: Supply Chain Finance" class="book-image book-cover-front">
+            <img src="images/book-supply-chain-back.png" alt="Book Cover: Supply Chain Finance" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Supply Chain Finance</h3>
+            <p class="book-price">₹300</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Supply%20Chain%20Finance" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+    
+    <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/book-managerial-economics-front.png" alt="Book Cover: Managerial Economics" class="book-image book-cover-front">
+            <img src="images/book-managerial-economics-back.png" alt="Book Cover: Managerial Economics" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Managerial Economics</h3>
+            <p class="book-price">₹300</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Managerial%20Economics" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+    
+    <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/book-retail-management-front.png" alt="Book Cover: Retail Management" class="book-image book-cover-front">
+            <img src="images/book-retail-management-back.png" alt="Book Cover: Retail Management" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Retail Management</h3>
+            <p class="book-price">₹300</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Retail%20Management" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+    
+    <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/book-business-taxation-front.png" alt="Book Cover: Business Taxation" class="book-image book-cover-front">
+            <img src="images/book-business-taxation-back.png" alt="Book Cover: Business Taxation" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Business Taxation</h3>
+            <p class="book-price">₹300</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Business%20Taxation" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+    
+    <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/book-financial-accounting-front.png" alt="Book Cover: Financial Accounting" class="book-image book-cover-front">
+            <img src="images/book-financial-accounting-back.png" alt="Book Cover: Financial Accounting" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Financial Accounting</h3>
+            <p class="book-price">₹400</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Financial%20Accounting" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+    
+    <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/book-retail-banking-front.png" alt="Book Cover: Retail Banking" class="book-image book-cover-front">
+            <img src="images/book-retail-banking-back.png" alt="Book Cover: Retail Banking" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Retail Banking</h3>
+            <p class="book-price">₹300</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Retail%20Banking" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+    
+    <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/book-retail-brand-management-front.png" alt="Book Cover: Retail and Brand Management" class="book-image book-cover-front">
+            <img src="images/book-retail-brand-management-back.png" alt="Book Cover: Retail and Brand Management" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Retail & Brand Management</h3>
+            <p class="book-price">₹300</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Retail%20and%20Brand%20Management" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+<div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/Front-Cost-Accounting.png" alt="Book Cover: Cost Accountinge" class="book-image book-cover-front">
+            <img src="images/Back-Cost-Accounting-2.png" alt="Book Cover: Cost Accountinge" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Cost Accounting</h3>
+            <p class="book-price">₹400</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Cost%20Accounting" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+        <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/front-Management-Accounting.png" alt="Book Cover: Management Accounting" class="book-image book-cover-front">
+            <img src="images/Back-Management-Accounting-2.png" alt="Book Cover: Management Accounting" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Management Accounting</h3>
+            <p class="book-price">₹400</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Management%20Accounting" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+        <div class="swiper-slide book-slide">
+        <div class="book-image-container">
+            <img src="images/front-strategic-marketing.PNG" alt="Book Cover: Strategic Marketing" class="book-image book-cover-front">
+            <img src="images/back-strategic-marketing.PNG" alt="Book Cover: Strategic Marketing" class="book-image book-cover-back">
+        </div>
+        <div class="book-slide-content">
+            <h3>Strategic Marketing</h3>
+            <p class="book-price">₹300</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Strategic%20Marketing" class="btn" target="_blank">Order Now</a>
+        </div>
+    </div>
+       <div class="swiper-slide book-slide">
+            <div class="book-image-container">
+                <img src="images/front-marketing-requisites.PNG" alt="Book Cover: Marketing Requisites" class="book-image book-cover-front">
+                <img src="images/back-marketing-requisites.PNG" alt="Book Cover: Marketing Requisites" class="book-image book-cover-back">
+            </div>
+            <div class="book-slide-content">
+                <h3>Marketing Requisites</h3>
+                <p class="book-price">₹300</p> 
+                <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Marketing%20Requisites" class="btn" target="_blank">Order Now</a>
+            </div>
+        </div>
+    </div>
+    
+    
                     </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                 </div>
 
+                 <h3 class="reveal" style="text-align: center; font-size: 2.2rem; margin-top: 40px; margin-bottom: 40px;">List of Book Chapters Published</h3>
+
+<div class="chapters-static-grid reveal" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; gap: 30px; justify-content: center;">
+    
+    <div class="featured-book-item" style="flex: 1; max-width: 500px; text-align: center;">
+        <img src="images/book-chapter-1.png" alt="Chapter 1" 
+             style="width: 100%; border-radius: 8px; box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-gold); transition: transform 0.3s ease;">
+    </div>
+
+    <div class="featured-book-item" style="flex: 1; max-width: 500px; text-align: center;">
+        <img src="images/book-chapter-2.png" alt="Chapter 2" 
+             style="width: 100%; border-radius: 8px; box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-gold); transition: transform 0.3s ease;">
+    </div>
+
+</div>
+
             </div>
         </section>
+
+        <section id="awards">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>AWARDS</h2>
+        </div>
+        
+        <div class="publication-intro reveal" style="text-align: center; margin-bottom: 50px;">
+            <p><strong>AMBEDKAR JAYANTI SPECIAL AWARDS – 2026</strong>, honouring individuals who stand for <strong>Excellence in Higher Education</strong>, Equality, Justice, Talent & Social Change, inspired by the vision of Dr. B. R. Ambedkar.</p>
+            <p style="margin-top: 15px; font-size: 1.1rem; color: var(--primary-blue);">
+                <strong>Event Date:</strong> 14th April 2026 (Tuesday) | <strong>Platform:</strong> Online
+            </p>
+            <p>Ignite Vision Academy cordially invites academicians and industrialists to nominate their profiles for the various awards listed below.</p>
+        </div>
+
+        <div class="awards-grid reveal">
+            <div class="award-item">Best Principal Award</div>
+            <div class="award-item">Best Vice Principal Award</div>
+            <div class="award-item">Best Dean Award</div>
+            <div class="award-item">Best Director Award</div>
+            <div class="award-item">Best COE Award</div>
+            <div class="award-item">Best HOD Award</div>
+            <div class="award-item">Best Faculty Award</div>
+            <div class="award-item">Best Researcher Award</div>
+            <div class="award-item">Best Placement Officer Award</div>
+            <div class="award-item">Best Placement Coordinator Award</div>
+            <div class="award-item">Best Administrator Award</div>
+            <div class="award-item">Best Research Grant Award</div>
+            <div class="award-item">Best Research Grant Receiver Award</div>
+            <div class="award-item">Best IPR Award</div>
+            <div class="award-item">Best Patent Award</div>
+            <div class="award-item">Best Young Faculty Award</div>
+            <div class="award-item">Best Young Researcher Award</div>
+            <div class="award-item">Best Inspiring Faculty Award</div>
+            <div class="award-item">Best Inspiring Professor Award</div>
+            <div class="award-item">Best Alumni Award</div>
+            <div class="award-item">Best Industry Institute Interaction Coordinator Award</div>
+            <div class="award-item">Best NSS / NCC Officer Award</div>
+            <div class="award-item">Best Innovative Faculty Award</div>
+            <div class="award-item">Best Leadership Award</div>
+            <div class="award-item">Best Exam Cell Coordinator Award</div>
+            <div class="award-item">Best e-learning content developer Award</div>
+            <div class="award-item">Best Book Award</div>
+            <div class="award-item">Best Book Author Award</div>
+            <div class="award-item">Best Edited Book Award</div>
+            <div class="award-item">Best Research Paper Award</div>
+            <div class="award-item">Lifetime Achievement Award</div>
+        </div>
+
+        <div class="reveal" style="margin-top: 60px; background: var(--white); border-radius: 15px; box-shadow: var(--shadow-hover); overflow: hidden; border: 1px solid #eee;">
+            <div style="background: var(--primary-blue); color: white; padding: 20px; text-align: center;">
+                <h3 style="color: var(--primary-gold); margin: 0;">Selection & Nomination Process</h3>
+            </div>
+            <div style="padding: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
+                <div>
+                    <div style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 10px;">01</div>
+                    <h4 style="color: var(--primary-blue); margin-bottom: 10px;">Submission</h4>
+                    <p style="font-size: 0.9rem;">Submit your profile or CV via the official nomination link.</p>
+                </div>
+                <div>
+                    <div style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 10px;">02</div>
+                    <h4 style="color: var(--primary-blue); margin-bottom: 10px;">Scrutiny</h4>
+                    <p style="font-size: 0.9rem;">Profiles are meticulously scrutinized by our expert jury members.</p>
+                </div>
+                <div>
+                    <div style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 10px;">03</div>
+                    <h4 style="color: var(--primary-blue); margin-bottom: 10px;">Selection</h4>
+                    <p style="font-size: 0.9rem;">Selection intimation and communication sent via registered email.</p>
+                </div>
+                <div>
+                    <div style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 10px;">04</div>
+                    <h4 style="color: var(--primary-blue); margin-bottom: 10px;">Registration</h4>
+                    <p style="font-size: 0.9rem;">Fee of Rs. 1,500/- is applicable upon successful selection.</p>
+                </div>
+            </div>
+            <div style="text-align: center; padding-bottom: 40px;">
+                <a href="https://forms.gle/ayHHUqMoE1tZU5K79" target="_blank" class="btn" style="padding: 15px 40px; font-size: 1.1rem;">Submit Nomination Now</a>
+            </div>
+        </div>
+
+        <div class="reveal" style="margin-top: 60px;">
+            <h3 style="text-align: center; margin-bottom: 35px;">Benefits for Award Winners</h3>
+            <div class="benefits-list">
+                <div class="benefit-card" style="border-bottom: 4px solid var(--primary-gold);">
+                    <h4 style="display: flex; align-items: center;">
+                        <span style="margin-right: 10px;">📜</span> Certification & API
+                    </h4>
+                    <ul style="font-size: 0.9rem; padding-left: 15px; margin-top: 10px;">
+                        <li>E-Printed certificate with QR code and photograph.</li>
+                        <li>Useful for API scores as per UGC norms.</li>
+                    </ul>
+                </div>
+                <div class="benefit-card" style="border-bottom: 4px solid var(--primary-gold);">
+                    <h4 style="display: flex; align-items: center;">
+                        <span style="margin-right: 10px;">🏫</span> Accreditation Support
+                    </h4>
+                    <ul style="font-size: 0.9rem; padding-left: 15px; margin-top: 10px;">
+                        <li>Faculty awards useful for NIRF ranking.</li>
+                        <li>Support for NBA and NAAC accreditation purposes.</li>
+                    </ul>
+                </div>
+                <div class="benefit-card" style="border-bottom: 4px solid var(--primary-gold);">
+                    <h4 style="display: flex; align-items: center;">
+                        <span style="margin-right: 10px;">🌐</span> Global Visibility
+                    </h4>
+                    <ul style="font-size: 0.9rem; padding-left: 15px; margin-top: 10px;">
+                        <li>Wide publicity through email.</li>
+                        <li>Winners featured on the Ignite Vision website.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
         
         <section id="events">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal">
                     <h2>Events Conducted</h2>
                 </div>
                 
-                <table class="events-table">
+                <table class="events-table reveal">
                     <thead>
                         <tr>
                             <th>Event Name</th>
@@ -390,42 +792,41 @@
                     </tbody>
                 </table>
                 
-                <h3>Past Event Flyers</h3>
+                <h3 class="reveal">Past Event Flyers</h3>
                 
-                <div class="flyer-carousel-container">
-                    <div class="swiper" id="flyer-swiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide flyer-slide">
-                                <img src="images/flyer-spss.png" alt="Flyer for Basic Data Analysis with SPSS Workshop">
-                            </div>
-                            <div class="swiper-slide flyer-slide">
-                                <img src="images/flyer-literature-review.png" alt="Flyer for Mastering Systematic Literature Review Workshop">
-                            </div>
-                            <div class="swiper-slide flyer-slide">
-                                <img src="images/flyer-advanced-tools.png" alt="Flyer for Advanced Tools for Research Excellence FDP">
-                            </div>
-                            <div class="swiper-slide flyer-slide">
-                                <img src="images/flyer-research-skills.png" alt="Flyer for Enhancing Excellence in Research Skills FDP">
-                            </div>
-                            <div class="swiper-slide flyer-slide">
-                                <img src="images/flyer-iks-insights.png" alt="Flyer for IKS Insights FDP">
-                            </div>
-                        </div>
-                        <div class="swiper-pagination"></div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
-
+                <div class="flyer-carousel-container reveal">
+    <div class="swiper" id="flyer-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide flyer-slide">
+                <img src="images/flyer-spss.png" alt="Flyer for Basic Data Analysis with SPSS Workshop">
+            </div>
+            <div class="swiper-slide flyer-slide">
+                <img src="images/flyer-literature-review.png" alt="Flyer for Mastering Systematic Literature Review Workshop">
+            </div>
+            <div class="swiper-slide flyer-slide">
+                <img src="images/flyer-advanced-tools.png" alt="Flyer for Advanced Tools for Research Excellence FDP">
+            </div>
+            <div class="swiper-slide flyer-slide">
+                <img src="images/flyer-research-skills.png" alt="Flyer for Enhancing Excellence in Research Skills FDP">
+            </div>
+            <div class="swiper-slide flyer-slide">
+                <img src="images/flyer-iks-insights.png" alt="Flyer for IKS Insights FDP">
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="swiper-button-next flyer-next"></div>
+    <div class="swiper-button-prev flyer-prev"></div>
+</div>
             </div>
         </section>
         
         <section id="associates">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal">
                     <h2>Our Associations</h2>
                 </div>
-                <div class="associates-list">
+                <div class="associates-list reveal">
                     <div class="associate-item">Pallathur Seethalakshmi College for Womens</div>
                     <div class="associate-item">Dr.Zakir Husain College, Ilayangudi</div>
                     <div class="associate-item">Jayaraj Annapackiyam College</div>
@@ -435,76 +836,63 @@
         </section>
     </main>
 
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-grid">
-                
-                <div class="footer-form">
-                    <h3>Get in Touch</h3>
-                    <p style="color: #eee; margin-bottom: 25px;">Have questions? Fill out the form below and we'll get back to you.</p>
-                    
-                    <form 
-                        action="" 
-                        method="POST" 
-                        target="_blank" 
-                        class="contact-form"
-                    >
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="entry.12345678" required> </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="entry.23456789" required> </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="entry.34567890" required> </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="entry.45678901" required></textarea> </div>
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
+<footer id="contact" style="background-color: #0d2c61; padding: 60px 0 30px; color: var(--white);">
+    <div class="container">
+        <div class="footer-grid" style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; align-items: stretch;">
+            
+            <div class="footer-brand-sidebar reveal" style="background-color: #0A234E; text-align: center; display: flex; flex-direction: column; justify-content: center; padding: 35px 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05);">
+                <div style="margin-bottom: 15px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="var(--primary-gold)" style="margin-bottom: 10px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM3.89 9L12 4.58 20.11 9 12 13.42 3.89 9zM12 16l-7-3.82V15l7 3.82 7-3.82v-2.82L12 16z"/>
+                    </svg>
+                    <h3 style="color: var(--white); font-size: 1.5rem; margin: 0; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.1;">
+                        Ignite Vision Academy
+                    </h3>
+                    <div style="width: 40px; height: 2px; background: var(--primary-gold); margin: 10px auto 0;"></div>
                 </div>
-                
-                <div class="footer-info-links">
-                    
-                    <div class="footer-contact">
-                        <h3>Contact Us</h3>
-                        <p>
-                            <strong>Phone:</strong> <br>
-                            <a href="tel:+919944707323">+91 9944707323</a>
-                        </p>
-                        <p>
-                            <strong>Email:</strong> <br>
-                            <a href="mailto:ignitevisionacademy@gmail.com">ignitevisionacademy@gmail.com</a>
-                        </p>
-                        <p>
-                            <strong>Address:</strong> <br>
-                            Sri Ganapathy Nagar, 
-                            Sholinganallur Chennai 600119
-                        </p>
-                    </div>
-                    
-                    <div class="footer-links">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="#about">About Us</a></li>
-                            <li><a href="#initiatives">Academic Initiatives</a></li>
-                            <li><a href="#publications">Publications</a></li>
-                            <li><a href="catalog.html">Catalog</a></li>
-                            <li><a href="#events">Events</a></li>
-                            <li><a href="#team">Our Team</a></li>
-                        </ul>
-                    </div>
+                <p style="color: #cbd5e1; line-height: 1.6; font-size: 0.95rem; margin: 0; font-weight: 300;">
+                    <span style="display: block; font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 5px; font-weight: 700; letter-spacing: 1px;">MSME Reg. No. TN/21/0005125</span>
+                    A leading academic institution dedicated to advancing scholarly communication and enhancing professional competencies. We empower educators and students through innovation and research excellence.
+                </p>
+            </div>
 
+            <div class="footer-contact reveal" style="padding: 10px 0;">
+                <h3 style="color: var(--primary-gold); font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; font-size: 1.3rem;">Contact Us</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <p style="color: #eee; font-size: 0.95rem; margin: 0;">
+                        <strong style="color: var(--white); display: block; margin-bottom: 2px; font-size: 0.85rem; text-transform: uppercase; opacity: 0.8;">Phone</strong>
+                        <a href="tel:+919944707323" style="color: #cbd5e1; text-decoration: none; font-size: 1rem; transition: color 0.3s;">+91 9944707323</a>
+                    </p>
+                    <p style="color: #eee; font-size: 0.95rem; margin: 0;">
+                        <strong style="color: var(--white); display: block; margin-bottom: 2px; font-size: 0.85rem; text-transform: uppercase; opacity: 0.8;">Email</strong>
+                        <a href="mailto:ignitevisionacademy@gmail.com" style="color: #cbd5e1; text-decoration: none; word-break: break-all; transition: color 0.3s;">ignitevisionacademy@gmail.com</a>
+                    </p>
+                    <p style="color: #eee; font-size: 0.95rem; margin: 0;">
+                        <strong style="color: var(--white); display: block; margin-bottom: 2px; font-size: 0.85rem; text-transform: uppercase; opacity: 0.8;">Address</strong>
+                        <span style="color: #cbd5e1;">Chennai 600119, Tamil Nadu</span>
+                    </p>
                 </div>
             </div>
             
-            <div class="copyright">
-                <p>&copy; 2025 Ignite Vision Academy. All Rights Reserved.</p>
+            <div class="footer-links reveal" style="padding: 10px 0;">
+                <h3 style="color: var(--primary-gold); font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; font-size: 1.3rem;">Quick Links</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                    <li><a href="#about" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> About Us</a></li>
+                    <li><a href="#initiatives" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Services</a></li>
+                    <li><a href="#publications" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Publications</a></li>
+                    <li><a href="#awards" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Awards</a></li>
+                    <li><a href="catalog.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Catalog</a></li>
+                    <li><a href="#events" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Events</a></li>
+                </ul>
             </div>
-        </div>
-    </footer>
 
+        </div>
+        
+        <div class="copyright" style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #aaa; font-size: 0.85rem; letter-spacing: 1px;">
+            <p>&copy; 2026 Ignite Vision Academy. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
 
     <div class="floating-action-buttons">
         <a href="https://wa.me/919944707323" class="fab-icon whatsapp" target="_blank" aria-label="Chat on WhatsApp">
@@ -518,6 +906,22 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
+        // --- REVEAL ON SCROLL SCRIPT ---
+        const revealElements = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(target => {
+                observer.observe(target);
+            });
+        };
+        document.addEventListener('DOMContentLoaded', revealElements);
+
         // --- POPUP MODAL SCRIPT ---
         document.addEventListener('DOMContentLoaded', () => {
             const modalOverlay = document.getElementById('announcementModal');
@@ -535,21 +939,10 @@
         const heroSwiper = new Swiper('#hero-swiper', {
             loop: true,
             effect: 'fade',
-            fadeEffect: {
-                crossFade: true
-            },
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.hero-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.hero-nav-next',
-                prevEl: '.hero-nav-prev',
-            },
+            fadeEffect: { crossFade: true },
+            autoplay: { delay: 5000, disableOnInteraction: false },
+            pagination: { el: '.hero-pagination', clickable: true },
+            navigation: { nextEl: '.hero-nav-next', prevEl: '.hero-nav-prev' },
         });
 
         // --- PUBLICATION CAROUSEL SCRIPT ---
@@ -557,22 +950,11 @@
             loop: true,
             slidesPerView: 1, 
             spaceBetween: 30,
-            
             breakpoints: {
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 20
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 30
-                }
+                640: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 30 }
             },
-            
-            navigation: {
-                nextEl: '#publications-swiper .swiper-button-next',
-                prevEl: '#publications-swiper .swiper-button-prev',
-            },
+            navigation: { nextEl: '#publications-swiper .swiper-button-next', prevEl: '#publications-swiper .swiper-button-prev' },
         });
 
         // --- FLYER CAROUSEL SCRIPT ---
@@ -580,47 +962,20 @@
             loop: true,
             slidesPerView: 1,
             spaceBetween: 30,
-            
-            breakpoints: {
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 30
-                }
-            },
-
-            pagination: {
-                el: '#flyer-swiper .swiper-pagination',
-                clickable: true,
-            },
-
-            navigation: {
-                nextEl: '#flyer-swiper .swiper-button-next',
-                prevEl: '#flyer-swiper .swiper-button-prev',
-            },
+            breakpoints: { 768: { slidesPerView: 2, spaceBetween: 30 } },
+            pagination: { el: '#flyer-swiper .swiper-pagination', clickable: true },
+            navigation: { nextEl: '#flyer-swiper .swiper-button-next', prevEl: '#flyer-swiper .swiper-button-prev' },
         });
 
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <script>
+        // --- MOBILE NAVIGATION ---
         const primaryNav = document.getElementById('primary-navigation');
         const navToggle = document.querySelector('.mobile-nav-toggle');
-
         navToggle.addEventListener('click', () => {
             const isVisible = primaryNav.getAttribute('data-visible') === 'true';
-            
-            if (isVisible) {
-                primaryNav.setAttribute('data-visible', 'false');
-                navToggle.setAttribute('aria-expanded', 'false');
-            } else {
-                primaryNav.setAttribute('data-visible', 'true');
-                navToggle.setAttribute('aria-expanded', 'true');
-            }
+            primaryNav.setAttribute('data-visible', !isVisible);
+            navToggle.setAttribute('aria-expanded', !isVisible);
         });
     </script>
     
     </body>
-</html>
-
-</body>
 </html>
