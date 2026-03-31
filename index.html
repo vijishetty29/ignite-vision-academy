@@ -1,115 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- FLYER CAROUSEL INITIALIZATION ---
-    const flyerSwiper = new Swiper('#flyer-swiper', {
-        loop: true,
-        slidesPerView: 1,
-        spaceBetween: 30,
-        autoplay: {
-            delay: 3500,
-            disableOnInteraction: false,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 2,
-                spaceBetween: 30
-            }
-        },
-        pagination: {
-            el: '#flyer-swiper .swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.flyer-next', // Targets the unique class
-            prevEl: '.flyer-prev', // Targets the unique class
-        },
-    });
-
-    // --- PUBLICATIONS CAROUSEL INITIALIZATION ---
-    // Make sure this also uses unique classes (e.g., .pub-next / .pub-prev)
-    const publicationsSwiper = new Swiper('#publications-swiper', {
-        loop: true,
-        slidesPerView: 1,
-        spaceBetween: 30,
-        breakpoints: {
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 }
-        },
-        navigation: {
-            nextEl: '.pub-next', 
-            prevEl: '.pub-prev',
-        },
-    });
-});
-    document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. FLY-IN / REVEAL ON SCROLL ---
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                // stop observing once it has flown in
-                revealObserver.unobserve(entry.target); 
-            }
-        });
-    }, { 
-        threshold: 0.15, // Trigger when 15% of element is visible
-        rootMargin: "0px 0px -20px 0px" 
-    });
-
-    // Targets every element with the 'reveal' class
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // --- 2. POPUP MODAL ---
-    const modalOverlay = document.getElementById('announcementModal');
-    if (modalOverlay) {
-        setTimeout(() => { modalOverlay.style.display = 'flex'; }, 1500);
-        document.getElementById('closeModalBtn').addEventListener('click', () => {
-            modalOverlay.style.display = 'none';
-        });
-    }
-
-
-    // --- 3. SWIPER INITIALIZATIONS ---
-    new Swiper('#hero-swiper', {
-        loop: true,
-        effect: 'fade',
-        autoplay: { delay: 5000 },
-        pagination: { el: '.hero-pagination', clickable: true },
-        navigation: { nextEl: '.hero-nav-next', prevEl: '.hero-nav-prev' }
-    });
-
-    new Swiper('#publications-swiper', {
-        loop: true,
-        slidesPerView: 1,
-        spaceBetween: 30,
-        breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
-        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
-    });
-
-    new Swiper('#flyer-swiper', {
-        loop: true,
-        slidesPerView: 1,
-        breakpoints: { 768: { slidesPerView: 2, spaceBetween: 30 } },
-        pagination: { el: '.swiper-pagination', clickable: true }
-    });
-
-    // --- 4. MOBILE NAV ---
-    const navToggle = document.querySelector('.mobile-nav-toggle');
-    const primaryNav = document.getElementById('primary-navigation');
-    if (navToggle) {
-        navToggle.addEventListener('click', () => {
-            const isVisible = primaryNav.getAttribute('data-visible') === 'true';
-            primaryNav.setAttribute('data-visible', !isVisible);
-            navToggle.setAttribute('aria-expanded', !isVisible);
-        });
-    }
-});
-   </script>
-    
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -908,74 +798,112 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        // --- REVEAL ON SCROLL SCRIPT ---
-        const revealElements = () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal').forEach(target => {
-                observer.observe(target);
-            });
-        };
-        document.addEventListener('DOMContentLoaded', revealElements);
-
-        // --- POPUP MODAL SCRIPT ---
         document.addEventListener('DOMContentLoaded', () => {
-            const modalOverlay = document.getElementById('announcementModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const openModal = () => { modalOverlay.style.display = 'flex'; };
-            const closeModal = () => { modalOverlay.style.display = 'none'; };
-            setTimeout(openModal, 1500);
-            closeModalBtn.addEventListener('click', closeModal);
-            modalOverlay.addEventListener('click', (event) => {
-                if (event.target === modalOverlay) { closeModal(); }
-            });
-        });
-        
-        // --- HERO CAROUSEL SCRIPT ---
-        const heroSwiper = new Swiper('#hero-swiper', {
-            loop: true,
-            effect: 'fade',
-            fadeEffect: { crossFade: true },
-            autoplay: { delay: 5000, disableOnInteraction: false },
-            pagination: { el: '.hero-pagination', clickable: true },
-            navigation: { nextEl: '.hero-nav-next', prevEl: '.hero-nav-prev' },
-        });
+    
+    // --- FLYER CAROUSEL INITIALIZATION ---
+    const flyerSwiper = new Swiper('#flyer-swiper', {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        autoplay: {
+            delay: 3500,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30
+            }
+        },
+        pagination: {
+            el: '#flyer-swiper .swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.flyer-next', // Targets the unique class
+            prevEl: '.flyer-prev', // Targets the unique class
+        },
+    });
 
-        // --- PUBLICATION CAROUSEL SCRIPT ---
-        const publicationsSwiper = new Swiper('#publications-swiper', {
-            loop: true,
-            slidesPerView: 1, 
-            spaceBetween: 30,
-            breakpoints: {
-                640: { slidesPerView: 2, spaceBetween: 20 },
-                1024: { slidesPerView: 3, spaceBetween: 30 }
-            },
-            navigation: { nextEl: '#publications-swiper .swiper-button-next', prevEl: '#publications-swiper .swiper-button-prev' },
+    // --- PUBLICATIONS CAROUSEL INITIALIZATION ---
+    // Make sure this also uses unique classes (e.g., .pub-next / .pub-prev)
+    const publicationsSwiper = new Swiper('#publications-swiper', {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        breakpoints: {
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 }
+        },
+        navigation: {
+            nextEl: '.pub-next', 
+            prevEl: '.pub-prev',
+        },
+    });
+});
+    document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. FLY-IN / REVEAL ON SCROLL ---
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // stop observing once it has flown in
+                revealObserver.unobserve(entry.target); 
+            }
         });
+    }, { 
+        threshold: 0.15, // Trigger when 15% of element is visible
+        rootMargin: "0px 0px -20px 0px" 
+    });
 
-        // --- FLYER CAROUSEL SCRIPT ---
-        const flyerSwiper = new Swiper('#flyer-swiper', {
-            loop: true,
-            slidesPerView: 1,
-            spaceBetween: 30,
-            breakpoints: { 768: { slidesPerView: 2, spaceBetween: 30 } },
-            pagination: { el: '#flyer-swiper .swiper-pagination', clickable: true },
-            navigation: { nextEl: '#flyer-swiper .swiper-button-next', prevEl: '#flyer-swiper .swiper-button-prev' },
+    // Targets every element with the 'reveal' class
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // --- 2. POPUP MODAL ---
+    const modalOverlay = document.getElementById('announcementModal');
+    if (modalOverlay) {
+        setTimeout(() => { modalOverlay.style.display = 'flex'; }, 1500);
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
         });
+    }
 
-        // --- MOBILE NAVIGATION ---
-        const primaryNav = document.getElementById('primary-navigation');
-        const navToggle = document.querySelector('.mobile-nav-toggle');
+
+    // --- 3. SWIPER INITIALIZATIONS ---
+    new Swiper('#hero-swiper', {
+        loop: true,
+        effect: 'fade',
+        autoplay: { delay: 5000 },
+        pagination: { el: '.hero-pagination', clickable: true },
+        navigation: { nextEl: '.hero-nav-next', prevEl: '.hero-nav-prev' }
+    });
+
+    new Swiper('#publications-swiper', {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+    });
+
+    new Swiper('#flyer-swiper', {
+        loop: true,
+        slidesPerView: 1,
+        breakpoints: { 768: { slidesPerView: 2, spaceBetween: 30 } },
+        pagination: { el: '.swiper-pagination', clickable: true }
+    });
+
+    // --- 4. MOBILE NAV ---
+    const navToggle = document.querySelector('.mobile-nav-toggle');
+    const primaryNav = document.getElementById('primary-navigation');
+    if (navToggle) {
         navToggle.addEventListener('click', () => {
             const isVisible = primaryNav.getAttribute('data-visible') === 'true';
             primaryNav.setAttribute('data-visible', !isVisible);
             navToggle.setAttribute('aria-expanded', !isVisible);
+        });
+    }
         });
     </script>
     
