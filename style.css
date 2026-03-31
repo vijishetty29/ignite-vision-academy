@@ -1060,3 +1060,72 @@ footer {
         height: 24px;
     }
 }
+
+/* --- Reveal (Fly-In) Animation Logic --- */
+
+/* 1. The Starting State: Hidden, shifted down, and slightly scaled down */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95); 
+    transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1);
+    visibility: hidden;
+    will-change: transform, opacity;
+}
+
+/* 2. The Active State: Element slides up and fades in when scrolled into view */
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+}
+
+/* 3. Academic Services Specific Hover Zoom */
+.initiative-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.3s ease !important;
+}
+
+.initiative-card:hover {
+    transform: translateY(-10px) scale(1.03) !important;
+    box-shadow: var(--shadow-hover);
+    border-left-color: var(--primary-gold) !important;
+}
+
+/* 4. Service Image Zoom */
+.service-image-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.service-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.initiative-card:hover .service-image-wrapper img {
+    transform: scale(1.1);
+}
+
+/* Ensure the container doesn't cut off the arrows if they are outside */
+.featured-carousel-container {
+    padding: 0 20px;
+}
+
+/* Adjust arrow size for a single book display */
+.featured-next::after, .featured-prev::after {
+    font-size: 24px !important;
+    font-weight: bold;
+}
+
+/* Optional: Add a smooth zoom effect on the active book */
+#featured-books-swiper .swiper-slide img {
+    transition: transform 0.3s ease;
+}
+
+#featured-books-swiper .swiper-slide-active img {
+    transform: scale(1.05);
+}
