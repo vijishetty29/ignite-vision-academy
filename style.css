@@ -1129,3 +1129,33 @@ footer {
 #featured-books-swiper .swiper-slide-active img {
     transform: scale(1.05);
 }
+
+/* Fixed FAB Container */
+.fab-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;             /* Centers the icon */
+    align-items: center;       /* Centers vertically */
+    justify-content: center;    /* Centers horizontally */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Specific Style for WhatsApp */
+.fab-icon.whatsapp {
+    background: #25D366;
+    color: white;
+}
+
+/* Hover Effect */
+.fab-icon.whatsapp:hover {
+    background-color: #128C7E;
+    transform: scale(1.1);
+}
+
+/* Ensure the SVG itself doesn't try to take over the container */
+.fab-icon svg {
+    flex-shrink: 0; /* Prevents distortion */
+}
