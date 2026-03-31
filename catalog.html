@@ -10,6 +10,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ensuring reveal styles are present if not in style.css */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1);
+            visibility: hidden;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+    </style>
 </head>
 <body>
 
@@ -36,7 +50,7 @@
             <nav id="primary-navigation" data-visible="false">
                 <ul>
                     <li><a href="index.html#about">About</a></li>
-                    <li><a href="index.html#initiatives">Initiatives</a></li>
+                    <li><a href="index.html#initiatives">Services</a></li>
                     <li><a href="index.html#publications">Publications</a></li>
                     <li><a href="catalog.html">Catalog</a></li>
                     <li><a href="index.html#events">Events</a></li>
@@ -53,205 +67,249 @@
     </header>
 
     <main>
-
         <section id="catalog">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal">
                     <h2>Our Publications Catalog</h2>
                 </div>
                 
                 <div class="catalog-grid">
                 
-                    <div class="book-card">
+                    <div class="book-card reveal">
                         <div class="book-image-container">
                             <img src="images/book-supply-chain-front.png" alt="Book Cover: Supply Chain Finance" class="book-image book-cover-front">
                             <img src="images/book-supply-chain-back.png" alt="Book Cover: Supply Chain Finance" class="book-image book-cover-back">
                         </div>
                         <div class="book-card-content">
                             <h3>Supply Chain Finance</h3>
-                            <p class="book-price">₹499</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
+                            <p class="book-price">₹300</p> 
+                            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Supply%20Chain%20Finance" class="btn" target="_blank">Order Now</a>
                         </div>
                     </div>
                     
-                    <div class="book-card">
+                    <div class="book-card reveal">
                         <div class="book-image-container">
                             <img src="images/book-managerial-economics-front.png" alt="Book Cover: Managerial Economics" class="book-image book-cover-front">
                             <img src="images/book-managerial-economics-back.png" alt="Book Cover: Managerial Economics" class="book-image book-cover-back">
                         </div>
                         <div class="book-card-content">
                             <h3>Managerial Economics</h3>
-                            <p class="book-price">₹549</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
+                            <p class="book-price">₹300</p> 
+                            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Managerial%20Economics" class="btn" target="_blank">Order Now</a>
                         </div>
                     </div>
                     
-                    <div class="book-card">
+                    <div class="book-card reveal">
                         <div class="book-image-container">
                             <img src="images/book-retail-management-front.png" alt="Book Cover: Retail Management" class="book-image book-cover-front">
                             <img src="images/book-retail-management-back.png" alt="Book Cover: Retail Management" class="book-image book-cover-back">
                         </div>
                         <div class="book-card-content">
                             <h3>Retail Management</h3>
-                            <p class="book-price">₹449</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
+                            <p class="book-price">₹300</p> 
+                            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Retail%20Management" class="btn" target="_blank">Order Now</a>
                         </div>
                     </div>
                     
-                    <div class="book-card">
+                    <div class="book-card reveal">
                         <div class="book-image-container">
                             <img src="images/book-business-taxation-front.png" alt="Book Cover: Business Taxation" class="book-image book-cover-front">
                             <img src="images/book-business-taxation-back.png" alt="Book Cover: Business Taxation" class="book-image book-cover-back">
                         </div>
                         <div class="book-card-content">
                             <h3>Business Taxation</h3>
-                            <p class="book-price">₹599</p> <a href="https.www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
+                            <p class="book-price">₹300</p> 
+                            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Business%20Taxation" class="btn" target="_blank">Order Now</a>
                         </div>
                     </div>
                     
-                    <div class="book-card">
+                    <div class="book-card reveal">
                         <div class="book-image-container">
                             <img src="images/book-financial-accounting-front.png" alt="Book Cover: Financial Accounting" class="book-image book-cover-front">
                             <img src="images/book-financial-accounting-back.png" alt="Book Cover: Financial Accounting" class="book-image book-cover-back">
                         </div>
                         <div class="book-card-content">
                             <h3>Financial Accounting</h3>
-                            <p class="book-price">₹650</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
+                            <p class="book-price">₹400</p> 
+                            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Financial%20Accounting" class="btn" target="_blank">Order Now</a>
                         </div>
                     </div>
                     
-                    <div class="book-card">
+                    <div class="book-card reveal">
                         <div class="book-image-container">
                             <img src="images/book-retail-banking-front.png" alt="Book Cover: Retail Banking" class="book-image book-cover-front">
                             <img src="images/book-retail-banking-back.png" alt="Book Cover: Retail Banking" class="book-image book-cover-back">
                         </div>
                         <div class="book-card-content">
                             <h3>Retail Banking</h3>
-                            <p class="book-price">₹520</p> <a href="https://www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
+                            <p class="book-price">₹300</p> 
+                            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Retail%20Banking" class="btn" target="_blank">Order Now</a>
                         </div>
                     </div>
                     
-                    <div class="book-card">
+                    <div class="book-card reveal">
                         <div class="book-image-container">
                             <img src="images/book-retail-brand-management-front.png" alt="Book Cover: Retail and Brand Management" class="book-image book-cover-front">
                             <img src="images/book-retail-brand-management-back.png" alt="Book Cover: Retail and Brand Management" class="book-image book-cover-back">
                         </div>
                         <div class="book-card-content">
                             <h3>Retail & Brand Management</h3>
-                            <p class="book-price">₹600</Myp> <a href="httpsia.www.shanlax.com/product-category/books/" class="btn" target="_blank">Order Now</a>
+                            <p class="book-price">₹300</p> 
+                            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Retail%20and%20Brand%20Management" class="btn" target="_blank">Order Now</a>
                         </div>
                     </div>
                     
+                     <div class="book-card reveal">
+                        <div class="book-image-container">
+                            <img src="images/Front-Cost-Accounting.png" alt="Book Cover: Cost Accounting" class="book-image book-cover-front">
+                            <img src="images/Back-Cost-Accounting-2.png" alt="Book Cover: Cost Accounting" class="book-image book-cover-back">
+                        </div>
+                        <div class="book-card-content">
+                            <h3>Cost Accounting</h3>
+            <p class="book-price">₹400</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Cost%20Accounting" class="btn" target="_blank">Order Now</a>
+        </div>
                     </div>
+                     <div class="book-card reveal">
+                        <div class="book-image-container">
+                           <img src="images/front-Management-Accounting.png" alt="Book Cover: Management Accounting" class="book-image book-cover-front">
+            <img src="images/Back-Management-Accounting-2.png" alt="Book Cover: Management Accounting" class="book-image book-cover-back">
+        </div>
+                        <div class="book-card-content">
+                            <h3>Management Accounting</h3>
+            <p class="book-price">₹400</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Management%20Accounting" class="btn" target="_blank">Order Now</a>
+        </div>
+                    </div>
+
+                     <div class="book-card reveal">
+                        <div class="book-image-container">
+                           <img src="images/front-strategic-marketing.PNG" alt="Book Cover: Strategic Marketing" class="book-image book-cover-front">
+            <img src="images/back-strategic-marketing.PNG" alt="Book Cover: Strategic Marketing" class="book-image book-cover-back">
+         </div>
+                        <div class="book-card-content">
+                            <h3>Strategic Marketing</h3>
+            <p class="book-price">₹300</p> 
+            <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Strategic%20Marketing" class="btn" target="_blank">Order Now</a>
+        </div>
+                    </div>
+                     <div class="book-card reveal">
+                        <div class="book-image-container">
+                             <img src="images/front-marketing-requisites.PNG" alt="Book Cover: Marketing Requisites" class="book-image book-cover-front">
+                <img src="images/back-marketing-requisites.PNG" alt="Book Cover: Marketing Requisites" class="book-image book-cover-back">
+           </div>
+                        <div class="book-card-content">
+                            <h3>Marketing Requisites</h3>
+                <p class="book-price">₹300</p> 
+                <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Marketing%20Requisites" class="btn" target="_blank">Order Now</a>
+             </div>
+                    </div>
+                     <div class="book-card reveal">
+                        <div class="book-image-container">
+                             <img src="images/front-Digital-marketing.PNG" alt="Book Cover: Digital Marketing" class="book-image book-cover-front">
+                <img src="images/back-Digital-marketing.PNG" alt="Book Cover: Digital Marketing" class="book-image book-cover-back">
+            </div>
+                        <div class="book-card-content">
+                            <h3>Digital Marketing</h3>
+                <p class="book-price">₹300</p> 
+                <a href="https://wa.me/919944707323?text=Hello,%20I%20would%20like%20to%20order%20the%20book:%20Digital%20Marketing" class="btn" target="_blank">Order Now</a>
+            </div>
+                    </div>
+                </div>
             </div>
         </section>
-
     </main>
 
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-grid">
-                
-                <div class="footer-form">
-                    <h3>Get in Touch</h3>
-                    <p style="color: #eee; margin-bottom: 25px;">Have questions? Fill out the form below and we'll get back to you.</p>
-                    
-                    <form 
-                        action="https://formsubmit.co/shettyv29@gmail.com" 
-                        method="POST" 
-                        class="contact-form"
-                    >
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="Name" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="Email" placeholder="Enter your email address" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="Subject" placeholder="What is your message about?" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="Message" placeholder="Write your message here..." required></textarea>
-                        </div>
-                        
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_next" value="https://YOUR-DOMAIN.com/catalog.html"> <button type="submit" class="btn">Send Message</button>
-                    </form>
+   <footer id="contact" style="background-color: #0d2c61; padding: 60px 0 30px; color: var(--white);">
+    <div class="container">
+        <div class="footer-grid" style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; align-items: stretch;">
+            
+            <div class="footer-brand-sidebar reveal" style="background-color: #0A234E; text-align: center; display: flex; flex-direction: column; justify-content: center; padding: 35px 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05);">
+                <div style="margin-bottom: 15px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="var(--primary-gold)" style="margin-bottom: 10px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM3.89 9L12 4.58 20.11 9 12 13.42 3.89 9zM12 16l-7-3.82V15l7 3.82 7-3.82v-2.82L12 16z"/>
+                    </svg>
+                    <h3 style="color: var(--white); font-size: 1.5rem; margin: 0; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.1;">
+                        Ignite Vision Academy
+                    </h3>
+                    <div style="width: 40px; height: 2px; background: var(--primary-gold); margin: 10px auto 0;"></div>
                 </div>
-                
-                <div class="footer-info-links">
-                    
-                    <div class="footer-contact">
-                        <h3>Contact Us</h3>
-                        <p>
-                            <strong>Phone:</strong> <br>
-                            <a href="tel:+919944707323">+91 9944707323</a>
-                        </p>
-                        <p>
-                            <strong>Email:</strong> <br>
-                            <a href="mailto:ignitevisionacademy@gmail.com">ignitevisionacademy@gmail.com</a>
-EXAMPLE
-                        </p>
-                        <p>
-                            <strong>Address:</strong> <br>
-                            Sri Ganapathy Nagar, 
-                            Sholinganallur Chennai 600119
-                        </p>
-                    </div>
-                    
-                    <div class="footer-links">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="index.html#about">About Us</a></li>
-                            <li><a href="index.html#initiatives">Academic Initiatives</a></li>
-                            <li><a href="index.html#publications">Publications</a></li>
-                            <li><a href="catalog.html">Catalog</a></li>
-                            <li><a href="index.html#events">Events</a></li>
-                            <li><a href="index.html#team">Our Team</a></li>
-                        </ul>
-                    </div>
+                <p style="color: #cbd5e1; line-height: 1.6; font-size: 0.95rem; margin: 0; font-weight: 300;">
+                    <span style="display: block; font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 5px; font-weight: 700; letter-spacing: 1px;">MSME Reg. No. TN/21/0005125</span>
+                    A leading academic institution dedicated to advancing scholarly communication and enhancing professional competencies. We empower educators and students through innovation and research excellence.
+                </p>
+            </div>
 
+            <div class="footer-contact reveal" style="padding: 10px 0;">
+                <h3 style="color: var(--primary-gold); font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; font-size: 1.3rem;">Contact Us</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <p style="color: #eee; font-size: 0.95rem; margin: 0;">
+                        <strong style="color: var(--white); display: block; margin-bottom: 2px; font-size: 0.85rem; text-transform: uppercase; opacity: 0.8;">Phone</strong>
+                        <a href="tel:+919944707323" style="color: #cbd5e1; text-decoration: none; font-size: 1rem; transition: color 0.3s;">+91 9944707323</a>
+                    </p>
+                    <p style="color: #eee; font-size: 0.95rem; margin: 0;">
+                        <strong style="color: var(--white); display: block; margin-bottom: 2px; font-size: 0.85rem; text-transform: uppercase; opacity: 0.8;">Email</strong>
+                        <a href="mailto:ignitevisionacademy@gmail.com" style="color: #cbd5e1; text-decoration: none; word-break: break-all; transition: color 0.3s;">ignitevisionacademy@gmail.com</a>
+                    </p>
+                    <p style="color: #eee; font-size: 0.95rem; margin: 0;">
+                        <strong style="color: var(--white); display: block; margin-bottom: 2px; font-size: 0.85rem; text-transform: uppercase; opacity: 0.8;">Address</strong>
+                        <span style="color: #cbd5e1;">Chennai 600119, Tamil Nadu</span>
+                    </p>
                 </div>
             </div>
             
-            <div class="copyright">
-                <p>&copy; 2025 Ignite Vision Academy. All Rights Reserved.</p>
+            <div class="footer-links reveal" style="padding: 10px 0;">
+                <h3 style="color: var(--primary-gold); font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; font-size: 1.3rem;">Quick Links</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                    <li><a href="#about" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> About Us</a></li>
+                    <li><a href="#initiatives" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Services</a></li>
+                    <li><a href="#publications" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Publications</a></li>
+                    <li><a href="#awards" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Awards</a></li>
+                    <li><a href="catalog.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Catalog</a></li>
+                    <li><a href="#events" style="color: #cbd5e1; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: 0.3s;"><span style="color: var(--primary-gold);">→</span> Events</a></li>
+                </ul>
             </div>
+
         </div>
-    </footer>
+        
+        <div class="copyright" style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #aaa; font-size: 0.85rem; letter-spacing: 1px;">
+            <p>&copy; 2026 Ignite Vision Academy. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
 
     <div class="floating-action-buttons">
         <a href="https://wa.me/919944707323" class="fab-icon whatsapp" target="_blank" aria-label="Chat on WhatsApp">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path fill="currentColor" d="M414.7 97.4C371.1 53.8 314.3 32 256 32C132.3 32 32 132.3 32 256c0 40.8 11.1 79.3 31.4 113.3L32 480l119.4-31.4c33.4 19.7 70.9 31.4 104.6 31.4h.1c123.7 0 224-100.3 224-224c0-58.3-21.8-115.1-65.3-158.6zM256 438.3h-.1c-33.1 0-65.1-8.8-93.7-25.1l-6.7-4l-69.8 18.3L71 359.2l-4.5-7c-17-28.7-27.3-61.5-27.3-96.1c0-98.8 80.3-179.1 179.1-179.1s179.1 80.3 179.1 179.1c0 98.8-80.3 179.1-179.1 179.1zM368.5 308.7c-3.3-1.7-19.8-9.8-22.8-10.9c-3-1.1-5.2-1.7-7.4 1.7c-2.2 3.3-8.6 10.9-10.6 13.1c-2 2.2-4 2.5-7.4 0.8s-14.3-5.2-27.2-16.8c-10.1-9.1-16.8-20.4-18.8-24.1c-2-3.7-.2-5.7 1.5-7.4c1.5-1.5 3.3-3.9 5-5.8c1.7-1.9 2.2-3.3 3.3-5.7c1.1-2.3 0.6-4.3-0.3-5.7c-.9-1.4-7.4-17.8-10.1-24.4c-2.7-6.5-5.5-5.6-7.6-5.7c-2.1-.1-4.5-.1-6.8-.1c-2.3 0-6.1 0.9-9.3 4.8c-3.2 3.9-12.2 12-12.2 29.2c0 17.2 12.5 33.9 14.2 36.2c1.7 2.3 24.4 37.4 59.3 52.5c8.5 3.7 15.2 6 20.3 7.7c5.1 1.7 9.7 1.5 13.4 1c4.2-.1 19.8-8.1 22.6-16.1c2.8-7.9 2.8-14.8 2-16.1c-.9-1.3-3.3-2.4-6.8-4.1z"/>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M414.7 97.4C371.1 53.8 314.3 32 256 32C132.3 32 32 132.3 32 256c0 40.8 11.1 79.3 31.4 113.3L32 480l119.4-31.4c33.4 19.7 70.9 31.4 104.6 31.4h.1c123.7 0 224-100.3 224-224c0-58.3-21.8-115.1-65.3-158.6zM256 438.3h-.1c-33.1 0-65.1-8.8-93.7-25.1l-6.7-4l-69.8 18.3L71 359.2l-4.5-7c-17-28.7-27.3-61.5-27.3-96.1c0-98.8 80.3-179.1 179.1-179.1s179.1 80.3 179.1 179.1c0 98.8-80.3 179.1-179.1 179.1zM368.5 308.7c-3.3-1.7-19.8-9.8-22.8-10.9c-3-1.1-5.2-1.7-7.4 1.7c-2.2 3.3-8.6 10.9-10.6 13.1c-2 2.2-4 2.5-7.4 0.8s-14.3-5.2-27.2-16.8c-10.1-9.1-16.8-20.4-18.8-24.1c-2-3.7-.2-5.7 1.5-7.4c1.5-1.5 3.3-3.9 5-5.8c1.7-1.9 2.2-3.3 3.3-5.7c1.1-2.3 0.6-4.3-0.3-5.7c-.9-1.4-7.4-17.8-10.1-24.4c-2.7-6.5-5.5-5.6-7.6-5.7c-2.1-.1-4.5-.1-6.8-.1c-2.3 0-6.1 0.9-9.3 4.8c-3.2 3.9-12.2 12-12.2 29.2c0 17.2 12.5 33.9 14.2 36.2c1.7 2.3 24.4 37.4 59.3 52.5c8.5 3.7 15.2 6 20.3 7.7c5.1 1.7 9.7 1.5 13.4 1c4.2-.1 19.8-8.1 22.6-16.1c2.8-7.9 2.8-14.8 2-16.1c-.9-1.3-3.3-2.4-6.8-4.1z"/></svg>
         </a>
         <a href="tel:+919944707323" class="fab-icon phone" aria-label="Call Us">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.2-46.1 11.7L304 368c-72.3-14.4-137.7-79.7-152.1-152.1l15.7-47.9c13.9-10.9 18.5-29.8 11.7-46.1l-40-96z"/></svg>
         </a>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
     <script>
-        const primaryNav = document.getElementById('primary-navigation');
-        const navToggle = document.querySelector('.mobile-nav-toggle');
+        document.addEventListener('DOMContentLoaded', () => {
+            // REVEAL ON SCROLL
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
 
-        navToggle.addEventListener('click', () => {
-            const isVisible = primaryNav.getAttribute('data-visible') === 'true';
-            
-            if (isVisible) {
-                primaryNav.setAttribute('data-visible', 'false');
-                navToggle.setAttribute('aria-expanded', 'false');
-            } else {
-                primaryNav.setAttribute('data-visible', 'true');
-                navToggle.setAttribute('aria-expanded', 'true');
-            }
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+            // MOBILE NAVIGATION
+            const primaryNav = document.getElementById('primary-navigation');
+            const navToggle = document.querySelector('.mobile-nav-toggle');
+
+            navToggle.addEventListener('click', () => {
+                const isVisible = primaryNav.getAttribute('data-visible') === 'true';
+                primaryNav.setAttribute('data-visible', isVisible ? 'false' : 'true');
+                navToggle.setAttribute('aria-expanded', isVisible ? 'false' : 'true');
+            });
         });
     </script>
-    
-    </body>
-</html>
 </body>
 </html>
